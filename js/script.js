@@ -3,7 +3,10 @@ const { createApp } = Vue;
     createApp({
         data() {
             return {
+                autoPlayProperty : undefined,
+
                 activeImage : 0,
+
                 slides : [
                     {
                         image: 'img/01.webp',
@@ -34,6 +37,7 @@ const { createApp } = Vue;
                 
             }
         },
+
         methods : {
             nextImage() {
                 this.activeImage++;
@@ -49,6 +53,20 @@ const { createApp } = Vue;
                 if (this.activeImage < 0) {
                     this.activeImage = this.slides.length - 1;
                 }
+            },
+
+            autoPlay() {
+                this.autoPlayProperty = setInterval(() => {
+                    this.nextImage();
+                }, 3000)
+            },
+
+            stopAutoPlay() {
+                clearInterval(this.autoPlayProperty);
             }
+        },
+
+        created : function () {
+            this.autoPlay();
         }
     }).mount('#app')
